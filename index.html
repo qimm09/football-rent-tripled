@@ -1,0 +1,282 @@
+  
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sewa Padang Futsal</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Booking form popup style */
+      #bookingForm {
+        display: none;
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ccc;
+        width: 320px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+      #bookingForm h3 {
+        margin-top: 0;
+      }
+      #bookingForm label {
+        font-weight: bold;
+      }
+      #bookingForm input {
+        width: 100%;
+        padding: 6px;
+        margin: 6px 0 12px 0;
+        box-sizing: border-box;
+      }
+      #bookingForm button {
+        padding: 8px 12px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      /* Overlay behind the form */
+      #overlay {
+        display: none;
+        position: fixed;
+        top:0; left:0; right:0; bottom:0;
+        background: rgba(0,0,0,0.5);
+        z-index: 900;
+      }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>FUTSAL RENTAL</h1>
+</header>
+
+<div class="container">
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Cari padang futsal..." onkeyup="searchCourts()" />
+    </div>
+
+    <!-- Court List -->
+    <div class="court-list" id="courtList">
+        <div class="court" data-name="sungai ara futsal center">
+            <img src="court1.jpg" alt="Sungai Ara Futsal Centre" />
+            <div class="court-details">
+                <h3>Sungai Ara Futsal Centre</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60123456789" target="_blank">+60 12-345 6789</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating1">4.5</strong> / 5
+                </div>
+                <button onclick="vote(1, 5)">👍</button>
+                <button onclick="vote(1, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment1" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(1)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Sungai Ara Futsal Centre')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="court" data-name="Gembira Futsal">
+            <img src="court2.jpg" alt="Gembira Futsal" />
+            <div class="court-details">
+                <h3>Gembira Futsal</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60129876543" target="_blank">+60 12-987 6543</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating2">4.2</strong> / 5
+                </div>
+                <button onclick="vote(2, 5)">👍</button>
+                <button onclick="vote(2, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment2" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(2)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Gembira Futsal')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="court" data-name="Kinta Futsal">
+            <img src="court3.jpg" alt="Kinta Futsal" />
+            <div class="court-details">
+                <h3>Kinta Futsal</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60125554444" target="_blank">+60 12-555 4444</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating3">4.7</strong> / 5
+                </div>
+                <button onclick="vote(3, 5)">👍</button>
+                <button onclick="vote(3, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment3" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(3)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Kinta Futsal')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="court" data-name="Sungai Pinang Futsal Centre">
+            <img src="court4.jpg" alt="Sungai Pinang Futsal Centre" />
+            <div class="court-details">
+                <h3>Sungai Pinang Futsal Centre</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60123456789" target="_blank">+60 12-345 6789</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating4">3.9</strong> / 5
+                </div>
+                <button onclick="vote(4, 5)">👍</button>
+                <button onclick="vote(4, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment4" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(4)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Sungai Pinang Futsal Centre')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="court" data-name="Batu Feringghi Futsal">
+            <img src="court5.jpg" alt="Batu Feringghi Futsal" />
+            <div class="court-details">
+                <h3>Batu Feringghi Futsal</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60129876543" target="_blank">+60 12-987 6543</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating5">4.2</strong> / 5
+                </div>
+                <button onclick="vote(5, 5)">👍</button>
+                <button onclick="vote(5, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment5" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(5)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Batu Feringghi Futsal')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="court" data-name="Georgetown Futsal">
+            <img src="court6.jpg" alt="Georgetown Futsal" />
+            <div class="court-details">
+                <h3>Georgetown Futsal</h3>
+                <p>No Whatsapp: <a href="https://wa.me/60125554444" target="_blank">+60 12-555 4444</a></p>
+                <div class="rating">
+                    <span>⭐</span>
+                    <strong id="rating6">2.7</strong> / 5
+                </div>
+                <button onclick="vote(6, 5)">👍</button>
+                <button onclick="vote(6, 1)">👎</button>
+                <div class="comment-box">
+                    <textarea id="comment6" placeholder="Tinggalkan komen..."></textarea>
+                    <button onclick="submitComment(6)">Hantar</button>
+                </div>
+                <button onclick="openBookingForm('Georgetown Futsal')">Book Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay for modal background -->
+<div id="overlay"></div>
+
+<!-- Booking form modal -->
+<div id="bookingForm">
+    <h3>Booking for <span id="courtName"></span></h3>
+    <form id="formBooking">
+        <label for="bookingDate">Date:</label>
+        <input type="date" id="bookingDate" name="bookingDate" required />
+
+        <label for="bookingTime">Time:</label>
+        <input type="time" id="bookingTime" name="bookingTime" required />
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required />
+
+        <button type="submit">Submit Booking</button>
+        <button type="button" id="cancelBtn">Cancel</button>
+    </form>
+</div>
+
+<script>
+function searchCourts() {
+    let input = document.getElementById('search').value.toLowerCase();
+    let courts = document.querySelectorAll('.court');
+    courts.forEach(court => {
+        let name = court.getAttribute('data-name').toLowerCase();
+        court.style.display = name.includes(input) ? 'block' : 'none';
+    });
+}
+
+function vote(courtId, value) {
+    alert(`Vote untuk court ${courtId} dihantar! (Backend PHP akan proses)`);
+    // Akan sambung ke backend vote.php untuk update SQL
+}
+
+function submitComment(courtId) {
+    let comment = document.getElementById('comment' + courtId).value;
+    if(comment.trim() === "") {
+        alert("Sila tulis komen terlebih dahulu.");
+        return;
+    }
+    alert(`Komen dihantar untuk court ${courtId}: ${comment}`);
+    // Akan sambung ke backend comment.php untuk simpan dalam SQL
+}
+
+// Booking form logic
+
+const bookingForm = document.getElementById('bookingForm');
+const overlay = document.getElementById('overlay');
+const courtNameSpan = document.getElementById('courtName');
+const formBooking = document.getElementById('formBooking');
+const cancelBtn = document.getElementById('cancelBtn');
+
+function openBookingForm(courtName) {
+    courtNameSpan.textContent = courtName;
+    bookingForm.style.display = 'block';
+    overlay.style.display = 'block';
+}
+
+cancelBtn.addEventListener('click', () => {
+    bookingForm.style.display = 'none';
+    overlay.style.display = 'none';
+    formBooking.reset();
+});
+
+// Close form if overlay is clicked
+overlay.addEventListener('click', () => {
+    bookingForm.style.display = 'none';
+    overlay.style.display = 'none';
+    formBooking.reset();
+});
+
+formBooking.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const date = document.getElementById('bookingDate').value;
+    const time = document.getElementById('bookingTime').value;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const courtName = courtNameSpan.textContent;
+
+    // For now, just alert booking info
+    alert(`Booking Confirmed!\n\nPadang: ${courtName}\nTarikh: ${date}\nMasa: ${time}\nNama: ${name}\nNo. Telefon: ${phone}`);
+
+    // Close and reset form
+    bookingForm.style.display = 'none';
+    overlay.style.display = 'none';
+    formBooking.reset();
+
+    // TODO: send booking data to backend via fetch/ajax if needed
+});
+</script>
+<script src="court.js"></script>
+
+</body>
+</html>
